@@ -2,10 +2,13 @@ import List from "./components/List";
 import Cart from "./components/Cart";
 import { createContext, useState } from "react";
 import data from "./constants/data.json";
-// Create the context
+import images from "./constants/images";
+
 export const ItemsContext = createContext();
+export const ImgSizeContext = createContext();
+
 function App() {
-  const [items, setItems] = useState(data); // Use imported data
+  const [items, setItems] = useState(data);
 
   const updateItemCount = (id, count) => {
     setItems((prevItems) =>
@@ -19,8 +22,10 @@ function App() {
     <>
       <div className="flex flex-col xl:flex-row bg-rose-100 pb-14 overflow-hidden md:gap-8 lg:gap-8 xl:gap-0">
         <ItemsContext.Provider value={{ items, updateItemCount }}>
-          <List />
-          <Cart />
+          <ImgSizeContext.Provider value={images}>
+            <List />
+            <Cart />
+          </ImgSizeContext.Provider>
         </ItemsContext.Provider>
       </div>
     </>

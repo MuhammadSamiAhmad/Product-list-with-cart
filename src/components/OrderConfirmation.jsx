@@ -1,11 +1,14 @@
 import { ItemsContext } from "../App";
 import { useContext } from "react";
+import { ImgSizeContext } from "../App";
+
 const OrderConfirmation = ({
   isOrderConfirmed,
   handleClosePopup,
   OrderConfirmed,
 }) => {
   const { items } = useContext(ItemsContext);
+  const images = useContext(ImgSizeContext);
 
   return (
     <>
@@ -49,10 +52,7 @@ const OrderConfirmation = ({
                     >
                       <div className="flex items-start flex-row gap-2">
                         <img
-                          src={
-                            new URL(`${item.image["desktop"]}`, import.meta.url)
-                              .href
-                          }
+                          src={images[item.name].thumbnail}
                           alt={item.name}
                           className="size-16 rounded-lg"
                         />

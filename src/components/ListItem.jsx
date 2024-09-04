@@ -1,6 +1,7 @@
 import ListButton from "./ListButton";
 import { useContext, useState, useEffect } from "react";
 import { ItemsContext } from "../App";
+import { ImgSizeContext } from "../App";
 
 // Define the getCurrentScreenSize function first
 const getCurrentScreenSize = () => {
@@ -15,6 +16,8 @@ const getCurrentScreenSize = () => {
 
 const ListItem = ({ item }) => {
   const { updateItemCount } = useContext(ItemsContext);
+  const images = useContext(ImgSizeContext);
+  const { mobile, tablet, desktop } = images[item.name];
   const [count, setCount] = useState(item.count || 1);
   const [isClicked, setIsClicked] = useState(false);
   const [screenSize, setScreenSize] = useState(getCurrentScreenSize());
@@ -39,7 +42,16 @@ const ListItem = ({ item }) => {
   }, []);
 
   const getImgUrl = () => {
-    return new URL(`${item.image[screenSize]}`, import.meta.url).href;
+    switch (screenSize) {
+      case "mobile":
+        return mobile;
+      case "tablet":
+        return tablet;
+      case "desktop":
+        return desktop;
+      default:
+        return desktop;
+    }
   };
 
   return (
